@@ -9,18 +9,17 @@
 :root{
   --blue:#00B4FF; --green:#00FF9D; --yellow:#FFD700;
   --purple:#B14AFF; --bg:#04090F; --panel:#080F1E;
-  --card:#0B1628; --muted:#3A6080;
+  --muted:#3A6080;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:#C2DCF0;font-family:'Rajdhani',sans-serif;overflow-x:hidden;min-height:100vh;cursor:crosshair;}
+body{background:var(--bg);color:#C2DCF0;font-family:'Rajdhani',sans-serif;overflow-x:hidden;min-height:100vh;}
 
 /* GRID OVERLAY */
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.1) 2px,rgba(0,0,0,0.1) 4px);pointer-events:none;z-index:999;}
-canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 28px 100px;}
 
-header{text-align:center;padding:70px 0 50px;position:relative;}
+header{text-align:center;padding:70px 0 50px;}
 .s1-badge{
   display:inline-flex;align-items:center;gap:10px;
   border:1px solid var(--purple);padding:5px 18px;margin-bottom:28px;
@@ -38,7 +37,6 @@ header{text-align:center;padding:70px 0 50px;position:relative;}
 .c-blue{color:var(--blue);border-color:rgba(0,180,255,.35);}
 .c-gold{color:#0A0A0A;background:linear-gradient(90deg,var(--yellow),#FFA500);font-weight:700;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
 
-/* PRIZE SECTION */
 .prize-box{
   background:var(--panel);border:1px solid rgba(255,215,0,.2);
   padding:44px 32px;text-align:center;position:relative;margin:40px 0;
@@ -49,7 +47,6 @@ header{text-align:center;padding:70px 0 50px;position:relative;}
   text-shadow:0 0 40px rgba(255,215,0,0.5);
 }
 
-/* TIMERS */
 .clocks{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px;}
 .clk{background:var(--panel);border:1px solid;padding:25px;text-align:center;}
 .clk-r{border-color:var(--blue);}
@@ -58,137 +55,108 @@ header{text-align:center;padding:70px 0 50px;position:relative;}
 .clk-r .unum{color:var(--blue);} .clk-c .unum{color:var(--green);}
 .ulbl{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);}
 
-/* BUTTON */
+/* THE BUTTON */
 .btn-reg{
   display:inline-block;padding:22px 60px;
   font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:3px;
   text-decoration:none !important;
-  color:var(--bg) !important;
-  background:linear-gradient(135deg,var(--blue),var(--green));
-  clip-path:polygon(15px 0%,100% 0%,calc(100% - 15px) 100%,0% 100%);
-  transition:0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
-  cursor: pointer;
+  color:#000 !important;
+  background:linear-gradient(135deg, var(--blue), var(--green));
+  clip-path:polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+  transition:0.3s transform ease, 0.3s filter ease;
+  box-shadow: 0 0 20px rgba(0, 255, 157, 0.4);
   position: relative;
-  z-index: 10;
+  z-index: 100;
+  cursor: pointer;
 }
-.btn-reg:hover{transform:scale(1.05);filter:brightness(1.2);box-shadow: 0 0 25px rgba(0, 255, 157, 0.6);}
+.btn-reg:hover{transform:scale(1.05);filter:brightness(1.2);}
 
 @media(max-width:600px){ .clocks{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
-<canvas id="bg"></canvas>
 
 <div class="wrap">
   <header>
-    <div class="s1-badge">SEASON 1 — NOW LIVE</div>
+    <div class="s1-badge">SEASON 1 — LIVE</div>
     <h1 class="main-title">LARK AUTOMATION<br><span class="title-ghost">CHAMPIONSHIP</span></h1>
     <div class="sub-row">
       <span class="chip c-blue">MYDIN × LARK</span>
-      <span class="chip c-gold">2025</span>
+      <span class="chip c-gold">MALAYSIA</span>
     </div>
   </header>
 
   <div class="prize-box">
-    <div style="font-family:'Share Tech Mono';color:var(--muted);margin-bottom:10px;">// TOTAL PRIZE POOL //</div>
+    <div style="font-family:'Share Tech Mono';color:var(--muted);margin-bottom:10px;">TOTAL PRIZE POOL</div>
     <span class="p-amt" id="prize-disp">RM 0</span>
-    <div style="margin-top:10px; font-family:'Share Tech Mono'; font-size:12px; color:var(--green);">++ MORE PRIZES & CERTIFICATES</div>
+    <div style="margin-top:10px; font-family:'Share Tech Mono'; font-size:12px; color:var(--green);">++ CERTIFICATES & REWARDS</div>
   </div>
 
   <div class="clocks">
     <div class="clk clk-r">
-      <div class="ulbl">REGISTRATION CLOSES: 27 APR</div>
+      <div class="ulbl">REGISTRATION ENDS: 27 APR</div>
       <div id="r-timer" class="unum">00:00:00:00</div>
-      <div class="ulbl">DAYS : HRS : MIN : SEC</div>
     </div>
     <div class="clk clk-c">
-      <div class="ulbl">COMPETITION DAY: 15 JUN</div>
+      <div class="ulbl">COMPETITION START: 15 JUN</div>
       <div id="c-timer" class="unum">00:00:00:00</div>
-      <div class="ulbl">DAYS : HRS : MIN : SEC</div>
     </div>
   </div>
 
   <div style="text-align:center;">
-    <a href="https://mydin.sg.larksuite.com/share/base/form/shrlgXQ6YEDpr0zoojyz0rq2xtP" target="_blank" rel="noopener noreferrer" class="btn-reg">
-      ⚡ REGISTER VIA LARK
+    <a href="https://mydin.sg.larksuite.com/share/base/form/shrlgXQ6YEDpr0zoojyz0rq2xtP" target="_blank" class="btn-reg">
+      ⚡ JOIN THE CHALLENGE
     </a>
-    <p style="margin-top:15px;font-family:'Share Tech Mono';font-size:12px;color:var(--muted);">SECURE YOUR SPOT — SEASON 1 ACCESS</p>
+    <p style="margin-top:20px; font-family:'Share Tech Mono'; font-size:12px; color:var(--muted);">CLICK TO ACCESS LARK FORM</p>
   </div>
 </div>
 
 <script>
-// PRIZE COUNTER ANIMATION
-const prizeElement = document.getElementById('prize-disp');
-let currentPrize = 0;
-const targetPrize = 2000;
+// PRIZE COUNTER
+function startCounter() {
+    const el = document.getElementById('prize-disp');
+    let current = 0;
+    const target = 2000;
+    const step = 40; 
 
-function animatePrize() {
-    const increment = 35; // Speed of the counter
-    if (currentPrize < targetPrize) {
-        currentPrize += increment;
-        if (currentPrize > targetPrize) currentPrize = targetPrize;
-        prizeElement.innerText = "RM " + currentPrize.toLocaleString() + "++";
-        requestAnimationFrame(animatePrize);
-    } else {
-        prizeElement.innerText = "RM 2,000++";
-    }
+    const interval = setInterval(() => {
+        current += step;
+        if (current >= target) {
+            el.innerText = "RM 2,000++";
+            clearInterval(interval);
+        } else {
+            el.innerText = "RM " + current.toLocaleString();
+        }
+    }, 30);
 }
 
-// TIMERS
-const regDate = new Date("April 27, 2025 23:59:59").getTime();
-const compDate = new Date("June 15, 2025 08:00:00").getTime();
+// TIMERS (SET FOR 2025)
+const rEnd = new Date("April 27, 2025 23:59:59").getTime();
+const cStart = new Date("June 15, 2025 09:00:00").getTime();
 
-function updateTimer(targetTime, elementId) {
+function updateClocks() {
     const now = new Date().getTime();
-    const diff = targetTime - now;
     
-    if (diff < 0) {
-        document.getElementById(elementId).innerText = "00:00:00:00";
-        return;
-    }
-    
-    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const s = Math.floor((diff % (1000 * 60)) / 1000);
-    
-    document.getElementById(elementId).innerText = 
-        `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    [ {t:rEnd, id:'r-timer'}, {t:cStart, id:'c-timer'} ].forEach(timer => {
+        const diff = timer.t - now;
+        if(diff < 0) {
+            document.getElementById(timer.id).innerText = "00:00:00:00";
+        } else {
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById(timer.id).innerText = 
+                `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+        }
+    });
 }
 
-// INITIALIZE ON LOAD
-window.onload = function() {
-    animatePrize();
-    setInterval(() => {
-        updateTimer(regDate, 'r-timer');
-        updateTimer(compDate, 'c-timer');
-    }, 1000);
+window.onload = () => {
+    startCounter();
+    setInterval(updateClocks, 1000);
+    updateClocks();
 };
-
-// BACKGROUND CANVAS
-const canvas = document.getElementById('bg');
-const ctx = canvas.getContext('2d');
-let w, h;
-
-function setSize() {
-    w = canvas.width = window.innerWidth;
-    h = canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', setSize);
-setSize();
-
-function draw() {
-    ctx.clearRect(0, 0, w, h);
-    ctx.fillStyle = "rgba(0, 180, 255, 0.08)";
-    for(let i=0; i<40; i++) {
-        ctx.beginPath();
-        ctx.arc(Math.random()*w, Math.random()*h, 1, 0, Math.PI*2);
-        ctx.fill();
-    }
-    requestAnimationFrame(draw);
-}
-draw();
 </script>
 </body>
 </html>
