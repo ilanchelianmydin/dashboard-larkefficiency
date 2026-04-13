@@ -7,389 +7,188 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --blue:#00B4FF;--green:#00FF9D;--yellow:#FFD700;
-  --purple:#B14AFF;--bg:#04090F;--panel:#080F1E;
-  --card:#0B1628;--muted:#3A6080;--soft:#7AAFC4;
+  --blue:#00B4FF; --green:#00FF9D; --yellow:#FFD700;
+  --purple:#B14AFF; --bg:#04090F; --panel:#080F1E;
+  --card:#0B1628; --muted:#3A6080;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:#C2DCF0;font-family:'Rajdhani',sans-serif;overflow-x:hidden;min-height:100vh;cursor:none;}
+body{background:var(--bg);color:#C2DCF0;font-family:'Rajdhani',sans-serif;overflow-x:hidden;min-height:100vh;cursor:crosshair;}
 
-#cursor{position:fixed;width:20px;height:20px;border:1.5px solid var(--blue);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .1s,border-color .3s;transform:translate(-50%,-50%);}
-#cursor-dot{position:fixed;width:4px;height:4px;background:var(--green);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);}
-#cursor.hov{transform:translate(-50%,-50%) scale(1.9);border-color:var(--yellow);}
-
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:999;}
+/* GRID OVERLAY */
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.1) 2px,rgba(0,0,0,0.1) 4px);pointer-events:none;z-index:999;}
 canvas#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
 
 .wrap{position:relative;z-index:1;max-width:1000px;margin:0 auto;padding:0 28px 100px;}
 
-/* HEADER */
 header{text-align:center;padding:70px 0 50px;position:relative;}
-.hc{position:absolute;width:50px;height:50px;border-style:solid;border-color:rgba(0,180,255,.4);opacity:.7;}
-.htl{top:50px;left:0;border-width:2px 0 0 2px;}
-.htr{top:50px;right:0;border-width:2px 2px 0 0;}
-.hbl{bottom:0;left:0;border-width:0 0 2px 2px;}
-.hbr{bottom:0;right:0;border-width:0 2px 2px 0;}
-
 .s1-badge{
   display:inline-flex;align-items:center;gap:10px;
   border:1px solid var(--purple);padding:5px 18px;margin-bottom:28px;
   font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--purple);
-  position:relative;overflow:hidden;
-  animation:bdg 3s ease-in-out infinite;
 }
-.s1-badge::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(177,74,255,.15),transparent);animation:sweep 3s linear infinite;}
-@keyframes sweep{0%{left:-100%}100%{left:200%}}
-@keyframes bdg{0%,100%{box-shadow:0 0 8px rgba(177,74,255,.3)}50%{box-shadow:0 0 20px rgba(177,74,255,.6)}}
-.s1-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:dp 1.5s ease-in-out infinite;}
-@keyframes dp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
 
 .main-title{
   font-family:'Orbitron',sans-serif;font-size:clamp(30px,7vw,72px);
   font-weight:900;line-height:.95;letter-spacing:2px;text-transform:uppercase;
-  color:#fff;text-shadow:0 0 30px rgba(0,180,255,.7),0 0 80px rgba(0,180,255,.2);
-  animation:flick 8s infinite;
+  color:#fff;text-shadow:0 0 30px rgba(0,180,255,.7);
 }
-@keyframes flick{0%,93%,95%,97%,100%{opacity:1}94%,96%{opacity:.8}}
 .title-ghost{display:block;color:transparent;-webkit-text-stroke:1px rgba(0,180,255,.35);font-size:.62em;letter-spacing:8px;margin-top:6px;}
 
-.sub-row{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:20px;flex-wrap:wrap;}
-.chip{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:4px 14px;border:1px solid;}
+.chip{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;padding:4px 14px;border:1px solid;margin:10px 5px;display:inline-block;}
 .c-blue{color:var(--blue);border-color:rgba(0,180,255,.35);}
-.c-gold{color:#0A0A0A;background:linear-gradient(90deg,var(--yellow),#FFA500);border-color:transparent;font-weight:700;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
+.c-gold{color:#0A0A0A;background:linear-gradient(90deg,var(--yellow),#FFA500);font-weight:700;clip-path:polygon(8px 0%,100% 0%,calc(100% - 8px) 100%,0% 100%);}
 
-/* DIVIDER */
-.dl{display:flex;align-items:center;gap:16px;margin:36px 0;}
-.dl::before,.dl::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);}
-.dl span{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:3px;white-space:nowrap;}
-
-/* PRIZE */
+/* PRIZE SECTION */
 .prize-box{
   background:var(--panel);border:1px solid rgba(255,215,0,.2);
-  padding:44px 32px 36px;text-align:center;position:relative;overflow:hidden;
+  padding:44px 32px;text-align:center;position:relative;margin:40px 0;
 }
-.prize-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--yellow),var(--green),transparent);background-size:200%;animation:pbar 3s linear infinite;}
-@keyframes pbar{0%{background-position:0%}100%{background-position:200%}}
-
-.p-eye{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:4px;color:var(--muted);margin-bottom:18px;}
 .p-amt{
-  font-family:'Orbitron',sans-serif;font-size:clamp(54px,11vw,100px);
+  font-family:'Orbitron',sans-serif;font-size:clamp(50px,10vw,90px);
   font-weight:900;color:var(--yellow);line-height:1;display:block;
-  text-shadow:0 0 40px rgba(255,215,0,.7),0 0 80px rgba(255,215,0,.3);
-  animation:gp 2.5s ease-in-out infinite;
+  text-shadow:0 0 40px rgba(255,215,0,0.5);
 }
-@keyframes gp{
-  0%,100%{text-shadow:0 0 40px rgba(255,215,0,.7),0 0 80px rgba(255,215,0,.3)}
-  50%{text-shadow:0 0 70px rgba(255,215,0,1),0 0 140px rgba(255,215,0,.5)}
-}
-.p-more{font-family:'Orbitron',sans-serif;font-size:clamp(13px,2.5vw,20px);color:var(--green);letter-spacing:4px;margin-top:8px;display:block;text-shadow:0 0 20px rgba(0,255,157,.5);}
-.p-perks{display:flex;justify-content:center;gap:10px;margin-top:24px;flex-wrap:wrap;}
-.pp{
-  display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);
-  padding:9px 16px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;
-  transition:border-color .3s,background .3s;cursor:default;
-}
-.pp:hover{border-color:var(--yellow);background:rgba(255,215,0,.05);}
 
-/* CLOCKS */
+/* TIMERS */
 .clocks{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px;}
-.clk{background:var(--panel);border:1px solid;padding:26px 20px;position:relative;overflow:hidden;text-align:center;}
-.clk-r{border-color:rgba(0,180,255,.25);}
-.clk-c{border-color:rgba(0,255,157,.25);}
-.clk::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.clk-r::after{background:linear-gradient(90deg,transparent,var(--blue),transparent);}
-.clk-c::after{background:linear-gradient(90deg,transparent,var(--green),transparent);}
-.clk-ttl{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:3px;margin-bottom:12px;}
-.clk-r .clk-ttl{color:var(--blue);}
-.clk-c .clk-ttl{color:var(--green);}
-.clk-date{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);margin-bottom:14px;}
-.units{display:flex;justify-content:center;align-items:center;gap:6px;}
-.unit{text-align:center;}
-.unum{font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,40px);font-weight:700;line-height:1;display:block;min-width:52px;}
-.clk-r .unum{color:var(--blue);}
-.clk-c .unum{color:var(--green);}
-.ulbl{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);margin-top:4px;}
-.usep{font-family:'Orbitron',monospace;font-size:24px;color:rgba(255,255,255,.1);padding-bottom:18px;}
+.clk{background:var(--panel);border:1px solid;padding:25px;text-align:center;}
+.clk-r{border-color:var(--blue);}
+.clk-c{border-color:var(--green);}
+.unum{font-family:'Orbitron',sans-serif;font-size:32px;font-weight:700;display:block;}
+.clk-r .unum{color:var(--blue);} .clk-c .unum{color:var(--green);}
+.ulbl{font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--muted);}
 
-/* CTA */
-.cta-sec{text-align:center;padding:8px 0 20px;margin-bottom:48px;}
-.cta-lbl{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--muted);margin-bottom:24px;}
-.btn-ring{position:relative;display:inline-block;}
-.btn-ring::before,.btn-ring::after{content:'';position:absolute;border-radius:50%;border:1px solid var(--blue);opacity:0;animation:rout 2.5s ease-out infinite;pointer-events:none;}
-.btn-ring::before{inset:-24px;animation-delay:0s;}
-.btn-ring::after{inset:-48px;animation-delay:.9s;border-color:var(--green);}
-@keyframes rout{0%{opacity:.5;transform:scale(.95)}100%{opacity:0;transform:scale(1.08)}}
-
+/* BUTTON */
 .btn-reg{
-  display:inline-block;position:relative;
-  font-family:'Orbitron',sans-serif;font-size:clamp(13px,2.5vw,16px);
-  font-weight:700;letter-spacing:4px;text-transform:uppercase;
-  text-decoration:none;color:var(--bg);
+  display:inline-block;padding:22px 60px;
+  font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:3px;
+  text-decoration:none !important;
+  color:var(--bg) !important;
   background:linear-gradient(135deg,var(--blue),var(--green));
-  padding:20px 60px;
-  clip-path:polygon(14px 0%,100% 0%,calc(100% - 14px) 100%,0% 100%);
-  border:none;cursor:pointer;overflow:hidden;
-  animation:bbreath 3s ease-in-out infinite;
-  transition:transform .2s,filter .2s;
+  clip-path:polygon(15px 0%,100% 0%,calc(100% - 15px) 100%,0% 100%);
+  transition:0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
+  cursor: pointer;
+  position: relative;
+  z-index: 10;
 }
-@keyframes bbreath{0%,100%{filter:brightness(1) drop-shadow(0 0 12px rgba(0,180,255,.5))}50%{filter:brightness(1.1) drop-shadow(0 0 24px rgba(0,255,157,.7))}}
-.btn-reg::before{content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;background:rgba(255,255,255,.25);transform:skewX(-20deg);animation:bshine 4s ease-in-out infinite;}
-@keyframes bshine{0%,100%{left:-60%}50%{left:160%}}
-.btn-reg:hover{transform:scale(1.05);filter:brightness(1.15) drop-shadow(0 0 32px rgba(0,255,157,.9));}
-.btn-reg:active{transform:scale(.97);}
-.btn-sub{display:block;margin-top:14px;font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:var(--muted);}
+.btn-reg:hover{transform:scale(1.05);filter:brightness(1.2);box-shadow: 0 0 25px rgba(0, 255, 157, 0.6);}
 
-/* WHY COMPETE */
-.why{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:48px;}
-.wcard{
-  background:var(--card);border:1px solid rgba(255,255,255,.05);
-  padding:22px 16px;position:relative;overflow:hidden;
-  text-align:center;transition:border-color .3s,transform .3s;cursor:default;
-}
-.wcard:hover{border-color:rgba(0,180,255,.3);transform:translateY(-5px);}
-.wcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.wcard:nth-child(2)::before{background:var(--green);}
-.wcard:nth-child(3)::before{background:var(--purple);}
-.wcard:hover::before{transform:scaleX(1);}
-.wicon{font-size:30px;display:block;margin-bottom:12px;}
-.wtit{font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;color:#fff;margin-bottom:8px;}
-.wdsc{font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:1px;color:var(--muted);line-height:1.6;}
-
-/* FOOTER */
-footer{border-top:1px solid rgba(0,180,255,.1);padding:40px 0 20px;text-align:center;}
-footer p{font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
-.fl{color:var(--blue);font-family:'Orbitron',sans-serif;font-weight:700;}
-.fm{color:var(--yellow);font-family:'Orbitron',sans-serif;font-weight:700;}
-
-/* TOAST */
-#toast{
-  position:fixed;bottom:28px;right:28px;
-  background:var(--card);border-left:3px solid var(--green);
-  padding:12px 20px;font-family:'Share Tech Mono',monospace;
-  font-size:11px;color:var(--green);letter-spacing:1px;z-index:9998;
-  transform:translateX(260px);opacity:0;transition:all .35s;
-  max-width:280px;pointer-events:none;
-}
-#toast.show{transform:translateX(0);opacity:1;}
-
-@media(max-width:600px){
-  .clocks{grid-template-columns:1fr;}
-  .why{grid-template-columns:1fr;}
-  .btn-reg{padding:18px 36px;}
-  .p-perks{gap:8px;}
-}
+@media(max-width:600px){ .clocks{grid-template-columns:1fr;} }
 </style>
 </head>
 <body>
 <canvas id="bg"></canvas>
-<div id="cursor"></div>
-<div id="cursor-dot"></div>
-<div id="toast"></div>
 
 <div class="wrap">
-
-  <!-- HEADER -->
   <header>
-    <div class="hc htl"></div><div class="hc htr"></div>
-    <div class="s1-badge">
-      <div class="s1-dot"></div>
-      SEASON 1 &mdash; NOW LIVE
-      <div class="s1-dot"></div>
-    </div>
-    <h1 class="main-title">
-      LARK AUTOMATION<br>
-      <span class="title-ghost">CHAMPIONSHIP</span>
-    </h1>
+    <div class="s1-badge">SEASON 1 — NOW LIVE</div>
+    <h1 class="main-title">LARK AUTOMATION<br><span class="title-ghost">CHAMPIONSHIP</span></h1>
     <div class="sub-row">
-      <span class="chip c-blue">MYDIN &times; LARK</span>
+      <span class="chip c-blue">MYDIN × LARK</span>
       <span class="chip c-gold">2025</span>
-      <span class="chip c-blue">SEASON 01</span>
     </div>
-    <div class="hc hbl"></div><div class="hc hbr"></div>
   </header>
 
-  <!-- PRIZE -->
-  <div class="dl"><span>// PRIZE POOL //</span></div>
   <div class="prize-box">
-    <div class="p-eye">TOTAL REWARDS UP FOR GRABS</div>
+    <div style="font-family:'Share Tech Mono';color:var(--muted);margin-bottom:10px;">// TOTAL PRIZE POOL //</div>
     <span class="p-amt" id="prize-disp">RM 0</span>
-    <span class="p-more">++ MORE PRIZES AVAILABLE</span>
-    <div class="p-perks">
-      <div class="pp">🏆&nbsp; CASH PRIZES</div>
-      <div class="pp">📜&nbsp; CERTIFICATES OF EXCELLENCE</div>
-      <div class="pp">🎁&nbsp; EXCLUSIVE REWARDS</div>
-      <div class="pp">⚡&nbsp; RECOGNITION &amp; GLORY</div>
-    </div>
+    <div style="margin-top:10px; font-family:'Share Tech Mono'; font-size:12px; color:var(--green);">++ MORE PRIZES & CERTIFICATES</div>
   </div>
 
-  <!-- DUAL COUNTDOWN -->
-  <div class="dl" style="margin-top:36px;"><span>// TIMELINE //</span></div>
   <div class="clocks">
     <div class="clk clk-r">
-      <div class="clk-ttl">⏳ REGISTRATION CLOSES</div>
-      <div class="clk-date">27 APRIL 2025</div>
-      <div class="units">
-        <div class="unit"><span class="unum" id="r-d">--</span><div class="ulbl">DAYS</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="r-h">--</span><div class="ulbl">HRS</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="r-m">--</span><div class="ulbl">MIN</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="r-s">--</span><div class="ulbl">SEC</div></div>
-      </div>
+      <div class="ulbl">REGISTRATION CLOSES: 27 APR</div>
+      <div id="r-timer" class="unum">00:00:00:00</div>
+      <div class="ulbl">DAYS : HRS : MIN : SEC</div>
     </div>
     <div class="clk clk-c">
-      <div class="clk-ttl">🚀 COMPETITION DAY</div>
-      <div class="clk-date">15 JUNE 2025</div>
-      <div class="units">
-        <div class="unit"><span class="unum" id="c-d">--</span><div class="ulbl">DAYS</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="c-h">--</span><div class="ulbl">HRS</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="c-m">--</span><div class="ulbl">MIN</div></div>
-        <span class="usep">:</span>
-        <div class="unit"><span class="unum" id="c-s">--</span><div class="ulbl">SEC</div></div>
-      </div>
+      <div class="ulbl">COMPETITION DAY: 15 JUN</div>
+      <div id="c-timer" class="unum">00:00:00:00</div>
+      <div class="ulbl">DAYS : HRS : MIN : SEC</div>
     </div>
   </div>
 
-  <!-- REGISTER CTA -->
-  <div class="dl"><span>// ENTER THE ARENA //</span></div>
-  <div class="cta-sec">
-    <div class="cta-lbl">REGISTRATION VIA LARK &mdash; SPOTS ARE LIMITED</div>
-    <div class="btn-ring">
-      <a href="#REGISTRATION_LINK_HERE" class="btn-reg" id="reg-btn">
-        ⚡&nbsp; REGISTER NOW &mdash; SEASON 1
-      </a>
-    </div>
-    <span class="btn-sub">CLICK TO OPEN LARK REGISTRATION FORM</span>
+  <div style="text-align:center;">
+    <a href="https://mydin.sg.larksuite.com/share/base/form/shrlgXQ6YEDpr0zoojyz0rq2xtP" target="_blank" rel="noopener noreferrer" class="btn-reg">
+      ⚡ REGISTER VIA LARK
+    </a>
+    <p style="margin-top:15px;font-family:'Share Tech Mono';font-size:12px;color:var(--muted);">SECURE YOUR SPOT — SEASON 1 ACCESS</p>
   </div>
-
-  <!-- WHY COMPETE -->
-  <div class="dl"><span>// WHY COMPETE //</span></div>
-  <div class="why">
-    <div class="wcard">
-      <span class="wicon">🤖</span>
-      <div class="wtit">BUILD &amp; AUTOMATE</div>
-      <div class="wdsc">CREATE REAL LARK<br>AUTOMATION WORKFLOWS<br>THAT MATTER AT MYDIN</div>
-    </div>
-    <div class="wcard">
-      <span class="wicon">🏅</span>
-      <div class="wtit">WIN REWARDS</div>
-      <div class="wdsc">RM 2,000++ CASH PRIZES<br>+ CERTIFICATES FOR<br>ALL PARTICIPANTS</div>
-    </div>
-    <div class="wcard">
-      <span class="wicon">🌟</span>
-      <div class="wtit">LEVEL UP</div>
-      <div class="wdsc">SHARPEN YOUR DIGITAL<br>SKILLS &amp; STAND OUT<br>IN YOUR DEPARTMENT</div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <p><span class="fl">LARK</span> &times; <span class="fm">MYDIN</span> &mdash; AUTOMATION CHAMPIONSHIP SEASON 1</p>
-    <p style="font-size:10px;">[ SYSTEM ONLINE ] // UPDATES PUSHED VIA LARK APP</p>
-    <p style="font-size:10px;margin-top:6px;">REGISTRATION CLOSES 27 APR &nbsp;|&nbsp; COMPETITION DAY 15 JUN 2025</p>
-  </footer>
-
 </div>
 
 <script>
-/* ── CUSTOM CURSOR ── */
-const cur=document.getElementById('cursor'),dot=document.getElementById('cursor-dot');
-let mx=0,my=0,cx=0,cy=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
-(function loop(){cx+=(mx-cx)*.18;cy+=(my-cy)*.18;cur.style.left=cx+'px';cur.style.top=cy+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,.wcard,.pp,.clk').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cur.classList.add('hov'));
-  el.addEventListener('mouseleave',()=>cur.classList.remove('hov'));
-});
+// PRIZE COUNTER ANIMATION
+const prizeElement = document.getElementById('prize-disp');
+let currentPrize = 0;
+const targetPrize = 2000;
 
-/* ── BACKGROUND CANVAS ── */
-const canvas=document.getElementById('bg'),ctx=canvas.getContext('2d');
-let W,H,pts=[],go=0,mouseX=0,mouseY=0;
-function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
-window.addEventListener('resize',resize);resize();
-document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
-for(let i=0;i<90;i++) pts.push({x:Math.random()*2000,y:Math.random()*1200,vx:(Math.random()-.5)*.4,vy:-Math.random()*.5-.1,r:Math.random()*1.8+.2,a:Math.random()*.6+.1,hue:Math.random()<.5?200:150});
-
-function burst(x,y,col){
-  for(let i=0;i<14;i++) pts.push({x,y,vx:(Math.random()-.5)*5,vy:(Math.random()-.5)*5,r:Math.random()*2.5+.5,a:.95,hue:col||Math.random()<.5?55:160,life:70});
-}
-document.addEventListener('click',e=>burst(e.clientX,e.clientY));
-
-function frame(){
-  ctx.clearRect(0,0,W,H);
-  go=(go+.3)%80;
-  ctx.strokeStyle='rgba(0,80,160,.055)';ctx.lineWidth=.5;
-  for(let x=0;x<W+80;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
-  for(let y=(go%80)-80;y<H+80;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
-  const g=ctx.createRadialGradient(mouseX,mouseY,0,mouseX,mouseY,220);
-  g.addColorStop(0,'rgba(0,100,200,.07)');g.addColorStop(1,'rgba(0,0,0,0)');
-  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
-  for(let i=pts.length-1;i>=0;i--){
-    const p=pts[i];p.x+=p.vx;p.y+=p.vy;
-    if(p.life!==undefined){p.life--;p.a-=.014;if(p.a<=0||p.life<=0){pts.splice(i,1);continue;}}
-    else{if(p.y<-10){p.y=H+10;p.x=Math.random()*W;}if(p.x<-10||p.x>W+10){p.x=Math.random()*W;}}
-    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`hsla(${p.hue},100%,65%,${p.a})`;ctx.fill();
-  }
-  requestAnimationFrame(frame);
-}
-frame();
-
-/* ── COUNTDOWNS ── */
-const regEnd=new Date('2025-04-27T23:59:59');
-const compDay=new Date('2025-06-15T08:00:00');
-function pad(n){return String(Math.max(0,n)).padStart(2,'0');}
-function setClock(diff,ids){
-  const[di,hi,mi,si]=ids;
-  if(diff<=0){ids.forEach(id=>document.getElementById(id).textContent='00');return;}
-  document.getElementById(di).textContent=pad(Math.floor(diff/86400000));
-  document.getElementById(hi).textContent=pad(Math.floor(diff%86400000/3600000));
-  document.getElementById(mi).textContent=pad(Math.floor(diff%3600000/60000));
-  document.getElementById(si).textContent=pad(Math.floor(diff%60000/1000));
-}
-function tick(){
-  const now=Date.now();
-  setClock(regEnd-now,['r-d','r-h','r-m','r-s']);
-  setClock(compDay-now,['c-d','c-h','c-m','c-s']);
-}
-tick();setInterval(tick,1000);
-
-/* ── PRIZE ROLL-UP ── */
-let pv=0;
-const pel=document.getElementById('prize-disp');
-function rollPrize(){
-  if(pv<2000){pv=Math.min(pv+38,2000);pel.textContent='RM '+pv.toLocaleString();requestAnimationFrame(rollPrize);}
-  else pel.textContent='RM 2,000';
-}
-setTimeout(rollPrize,700);
-
-/* ── TOAST ── */
-function toast(msg,col){
-  const t=document.getElementById('toast');
-  t.textContent='> '+msg;
-  t.style.borderLeftColor=col||'var(--green)';
-  t.style.color=col||'var(--green)';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),3500);
+function animatePrize() {
+    const increment = 35; // Speed of the counter
+    if (currentPrize < targetPrize) {
+        currentPrize += increment;
+        if (currentPrize > targetPrize) currentPrize = targetPrize;
+        prizeElement.innerText = "RM " + currentPrize.toLocaleString() + "++";
+        requestAnimationFrame(animatePrize);
+    } else {
+        prizeElement.innerText = "RM 2,000++";
+    }
 }
 
-/* ── REGISTER BUTTON ── */
-document.getElementById('reg-btn').addEventListener('click',function(e){
-  const h=this.getAttribute('href');
-  if(!h||h==='#REGISTRATION_LINK_HERE'){
-    e.preventDefault();
-    toast('LARK LINK COMING SOON — STAY TUNED!',getComputedStyle(document.documentElement).getPropertyValue('--yellow'));
-    burst(e.clientX,e.clientY,55);
-  }
-});
+// TIMERS
+const regDate = new Date("April 27, 2025 23:59:59").getTime();
+const compDate = new Date("June 15, 2025 08:00:00").getTime();
 
-/* ── WELCOME TOAST ── */
-setTimeout(()=>toast('SEASON 1 REGISTRATION IS OPEN!'),1400);
+function updateTimer(targetTime, elementId) {
+    const now = new Date().getTime();
+    const diff = targetTime - now;
+    
+    if (diff < 0) {
+        document.getElementById(elementId).innerText = "00:00:00:00";
+        return;
+    }
+    
+    const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const s = Math.floor((diff % (1000 * 60)) / 1000);
+    
+    document.getElementById(elementId).innerText = 
+        `${String(d).padStart(2,'0')}:${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// INITIALIZE ON LOAD
+window.onload = function() {
+    animatePrize();
+    setInterval(() => {
+        updateTimer(regDate, 'r-timer');
+        updateTimer(compDate, 'c-timer');
+    }, 1000);
+};
+
+// BACKGROUND CANVAS
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+let w, h;
+
+function setSize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', setSize);
+setSize();
+
+function draw() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = "rgba(0, 180, 255, 0.08)";
+    for(let i=0; i<40; i++) {
+        ctx.beginPath();
+        ctx.arc(Math.random()*w, Math.random()*h, 1, 0, Math.PI*2);
+        ctx.fill();
+    }
+    requestAnimationFrame(draw);
+}
+draw();
 </script>
 </body>
 </html>
